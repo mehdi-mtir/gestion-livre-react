@@ -15,13 +15,25 @@ function App() {
     setLivres([...livres, livre]);
     setAction('');
   }
+
+  const supprimerLivre = (id)=>{
+    if(window.confirm("Êtes-vous sûre de vouloir supprimer le livre ?")){
+      const newLivres = livres.filter(
+        livre=>livre.id !== id
+      );
+      setLivres(newLivres);
+    }
+  }
   
   return (
     <div className="container">
       <h1>Gestion des livres</h1>
       <button class="btn btn-success" id="btnAjout" onClick={()=>setAction('add')}>Ajouter un livre</button>
 
-      <BookList livres={livres} />
+      <BookList 
+        livres={livres}
+        supprimerLivreRef = {supprimerLivre}
+      />
       {
         action==='add'?<BookAdd ajoutLivreRef={ajoutLivre} newId={livres[livres.length-1].id + 1}/>:""
       }

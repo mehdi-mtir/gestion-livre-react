@@ -27,8 +27,8 @@ function BookList(props){
                       <td>{livre.titre}</td>
                       <td>{livre.auteur}</td>
                       <td>{livre.prix}</td>
-                      <td><button className='btn btn-primary' >Editer</button></td>
-                      <td><button className='btn btn-danger' >Supprimer</button></td>
+                      <td><button className='btn btn-primary'  >Editer</button></td>
+                      <td><button className='btn btn-danger' onClick={()=>props.supprimerLivreRef(livre.id)} >Supprimer</button></td>
                   </tr>
                 )
           }
