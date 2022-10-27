@@ -2,6 +2,7 @@ import './App.css';
 import {useState} from "react";
 import BookList from './composants/BookList';
 import BookAdd from './composants/BookAdd';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
 
 function App() {
   const [livres, setLivres] = useState([
@@ -9,11 +10,10 @@ function App() {
       {id : 2, titre : "Power of habits", auteur : "Charles Duhigg", prix : 18.00},
       {id : 3, titre : "Atomic habits", auteur : "James Clear", prix : 20.00}
     ]);
-  const [action, setAction] = useState("");
+  
 
   const ajoutLivre = (livre)=>{
     setLivres([...livres, livre]);
-    setAction('');
   }
 
   const supprimerLivre = (id)=>{
@@ -28,15 +28,33 @@ function App() {
   return (
     <div className="container">
       <h1>Gestion des livres</h1>
-      <button class="btn btn-success" id="btnAjout" onClick={()=>setAction('add')}>Ajouter un livre</button>
+      <Link 
+        className="btn btn-success" 
+        id="btnAjout" 
+        to="/books/add"
+        >
+          Ajouter un livre
+      </Link>
 
-      <BookList 
-        livres={livres}
-        supprimerLivreRef = {supprimerLivre}
-      />
-      {
-        action==='add'?<BookAdd ajoutLivreRef={ajoutLivre} newId={livres[livres.length-1].id + 1}/>:""
-      }
+      <Routes>
+        <Route path='/' exact element={<Navigate to="/books" replace/>} />
+        <Route path='/books' exact element={
+          <BookList 
+            livres={livres}
+            supprimerLivreRef = {supprimerLivre}
+          />
+        } 
+        />
+        <Route path='/books/add' exact element={
+          <BookAdd 
+            ajoutLivreRef={ajoutLivre} 
+            newId={livres[livres.length-1].id + 1}
+          />
+        }
+        />
+      </Routes>
+
+      
     </div>
     
   );

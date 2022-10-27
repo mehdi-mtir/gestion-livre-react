@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function BookAdd(props){
   const [livre, setLivre] = useState({
@@ -7,11 +8,13 @@ function BookAdd(props){
     auteur : "",
     prix : ""
   })
+  const navigate = useNavigate();
 
 
   const ajoutLivre = (event)=>{
     event.preventDefault();
     props.ajoutLivreRef(livre);
+    navigate('/books')
   }
 
   const onInputChange = ({target})=>{
