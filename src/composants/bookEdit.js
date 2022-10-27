@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 
 function BookEdit(props){
   const {id} = useParams();
-  const [livre, setLivre] = useState(props.livres.find(livre=>livre.id === +id));
+  const [livre, setLivre] = useState({titre : "", auteur : "", prix : ""});
+
+  useEffect(
+    ()=>{
+      async function chargerLivre(){
+        //console.log("chargement...");
+        const reponse = await fetch("http://localhost:3000/books/"+id); //Lance la requête vers le serveur et j'attend la réception du résultat
+        const resultat = await reponse.json(); //convertit le résultat en objet Js
+        //console.log(resultat);
+        setLivre(resultat); //Utiliser les données récupérées pour initialiser notre variable d'état
+      }
+      chargerLivre();
+      //console.log("Chargement du composant");
+    }
+  , []);
+    //props.livres.find(livre=>livre.id === +id)
   //console.log(id);
   //console.table(props.livres);
   console.log(livre);
@@ -12,8 +27,15 @@ function BookEdit(props){
 
   const editLivre = (event)=>{
     event.preventDefault();
-    props.editLivreRef(livre);
-    navigate('/books')
+    //props.editLivreRef(livre);
+    const requestOptions = {
+      method : 'PUT',
+      headers : {'content-type': 'application/json'},
+      body : JSON.stringify(livre)
+    }
+    //Lancer la requête d'insertion vers le serveur
+    fetch("http://localhost:3000/books/"+livre.id, requestOptions)
+    .then(reponse => navigate('/books')); 
   }
 
   const onInputChange = ({target})=>{

@@ -3,18 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 function BookAdd(props){
   const [livre, setLivre] = useState({
-    id : props.newId,
     titre : "",
     auteur : "",
     prix : ""
   })
   const navigate = useNavigate();
 
-
   const ajoutLivre = (event)=>{
     event.preventDefault();
-    props.ajoutLivreRef(livre);
-    navigate('/books')
+    //Préparer les option à passer à la méthode Fetch : methode Post + format des données + données formatées
+    const requestOptions = {
+      method : 'POST',
+      headers : {'content-type': 'application/json'},
+      body : JSON.stringify(livre)
+    }
+    //Lancer la requête d'insertion vers le serveur
+    fetch("http://localhost:3000/books", requestOptions)
+    .then(reponse => navigate('/books')); //Si l'insertion est faite avec succès, je redirige l'utilisateur vers la liste
   }
 
   const onInputChange = ({target})=>{
