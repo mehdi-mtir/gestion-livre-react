@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom';
 
 function BookList(props){
   console.log(props.livres);
@@ -27,7 +27,7 @@ function BookList(props){
                       <td>{livre.titre}</td>
                       <td>{livre.auteur}</td>
                       <td>{livre.prix}</td>
-                      <td><button className='btn btn-primary'  >Editer</button></td>
+                      <td><Link className='btn btn-primary' to={'/books/edit/'+livre.id}  >Editer</Link></td>
                       <td><button className='btn btn-danger' onClick={()=>props.supprimerLivreRef(livre.id)} >Supprimer</button></td>
                   </tr>
                 )

@@ -17,6 +17,19 @@ function App() {
     setLivres([...livres, livre]);
   }
 
+  const editLivre = (livre)=>{
+    setLivres(
+      livres.map(
+        l=>{
+          if(l.id === livre.id)
+            return livre
+          else
+          return l
+        }
+      )
+    )
+  }
+
   const supprimerLivre = (id)=>{
     if(window.confirm("Êtes-vous sûre de vouloir supprimer le livre ?")){
       const newLivres = livres.filter(
@@ -53,7 +66,13 @@ function App() {
           />
         }
         />
-        <Route path='/books/edit/:id' element={<BookEdit livres={livres} />}/>
+        <Route 
+          path='/books/edit/:id' 
+          element={
+          <BookEdit livres={livres}
+            editLivreRef = {editLivre}
+          />
+        }/>
       </Routes>
 
       
