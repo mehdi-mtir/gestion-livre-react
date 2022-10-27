@@ -2,6 +2,7 @@ import './App.css';
 import {useState} from "react";
 import BookList from './composants/BookList';
 import BookAdd from './composants/BookAdd';
+import BookEdit from './composants/bookEdit';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           />
         }
         />
+        <Route path='/books/edit/:id' element={<BookEdit livres={livres} />}/>
       </Routes>
 
       
